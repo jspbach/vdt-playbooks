@@ -1,0 +1,11 @@
+---
+api_image: apiserver
+django_secret_key: dmjr4k5!uuwt3==2u!cxe@0ym9r^o(iggi3#(e=qlc+===%6ey
+db_user: test-user
+db_password: just-a-small-password
+db_name: testing
+db_host: db
+db_port: 5432
+api_port: 8080
+backend_repo: https://github.com/jspbach/vdt-backend.git
+backend_repo_name: vdt-backend

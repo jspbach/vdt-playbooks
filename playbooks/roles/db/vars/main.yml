@@ -1,0 +1,7 @@
+---
+db_image: postgres
+db_volume: postgres-data:/var/lib/postgresql/data
+db_user: test-user
+db_password: just-a-small-password
+db_port: 5432
+db: testing

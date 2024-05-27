@@ -1,0 +1,29 @@
+---
+
+- name: Clone the backend repository
+  git:
+    repo: "{{ frontend_repo }}"
+    dest: "~/three-tier-web-app/{{ frontend_repo_name }}"
+    clone: yes
+    update: yes
+
+- name: Build the Docker image
+  community.docker.docker_image:
+    build:
+      path: "~/three-tier-web-app/{{ frontend_repo_name }}"
+      dockerfile: deployment/Dockerfile
+    name: "{{ web_image }}"
+    source: build
+
+- name: Deploy Next.JS service
+  docker_container:
+    name: apiserver
+    image: "{{ web_image }}"
+    ports:
+      - "{{ web_port }}:3000"
+    networks:
+      - name: net
+    restart_policy: always
+    depends_on:
+      - db
+      - apiserver

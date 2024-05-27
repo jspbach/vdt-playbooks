@@ -1,0 +1,5 @@
+---
+web_image: frontend
+web_port: 3000
+frontend_repo_name: vdt-frontend
+frontend_repo: https://github.com/jspbach/vdt-frontend.git

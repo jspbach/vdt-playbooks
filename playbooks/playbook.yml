@@ -1,0 +1,16 @@
+---
+- hosts: local
+  roles:
+    - setup
+
+- hosts: db_servers
+  roles:
+    - db
+
+- hosts: api_servers
+  roles:
+    - apiserver
+
+- hosts: web_servers
+  roles:
+    - web

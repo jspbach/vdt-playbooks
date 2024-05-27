@@ -1,0 +1,37 @@
+---
+
+- name: Clone the backend repository
+  git:
+    repo: "{{ backend_repo }}"
+    dest: "~/three-tier-web-app/{{ backend_repo_name }}"
+    clone: yes
+    update: yes
+
+- name: Build the Docker image
+  community.docker.docker_image:
+    build:
+      path: "~/three-tier-web-app/{{ backend_repo_name }}"
+      dockerfile: deployment/Dockerfile
+    name: "{{ api_image }}"
+    source: build
+
+
+- name: Deploy API service
+  docker_container:
+    name: apiserver
+    image: "{{ api_image }}"
+    env:
+      DJANGO_SECRET_KEY: "{{ django_secret_key }}"
+      DB_USER: "{{ db_user }}"
+      DB_PASSWORD: "{{ db_password }}"
+      DB_NAME: "{{ db_name }}"
+      DB_HOST: "{{ db_host }}"
+      DB_PORT: "{{ db_port }}"
+      PORT: "{{ api_port }}"
+    ports:
+      - "{{ api_port }}:8080"
+    networks:
+      - name: net
+    restart_policy: always
+    depends_on:
+      - db
